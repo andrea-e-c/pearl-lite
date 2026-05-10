@@ -92,9 +92,10 @@ function DreamScene({ opacity }) {
     ctx.fillRect(0, 0, w, h * 0.6);
 
     // Sun disc
+    const sunR = Math.min(w, h) * 0.045;
     ctx.beginPath();
-    ctx.arc(sunX, sunY, 35, 0, Math.PI * 2);
-    const sunDisc = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 35);
+    ctx.arc(sunX, sunY, sunR, 0, Math.PI * 2);
+    const sunDisc = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, sunR);
     sunDisc.addColorStop(0, "rgba(255,255,220,1)");
     sunDisc.addColorStop(0.6, "rgba(253,203,110,0.9)");
     sunDisc.addColorStop(1, "rgba(253,121,168,0.6)");
@@ -123,8 +124,9 @@ function DreamScene({ opacity }) {
     reflGrad.addColorStop(0.3, "rgba(253,121,168,0.15)");
     reflGrad.addColorStop(0.6, "rgba(253,121,168,0.05)");
     reflGrad.addColorStop(1, "rgba(0,0,0,0)");
+    const reflW = w * 0.1;
     ctx.fillStyle = reflGrad;
-    ctx.fillRect(sunX - 60, waterTop, 120, h - waterTop);
+    ctx.fillRect(sunX - reflW / 2, waterTop, reflW, h - waterTop);
 
     // Water ripples
     for (let i = 0; i < 12; i++) {
@@ -220,15 +222,26 @@ function DreamScene({ opacity }) {
 }
 
 function drawMountainRange(ctx, w, baseY, maxHeight, color, alphaBase, time, speed) {
-  ctx.beginPath();
-  const segments = 20;
+  const segments = Math.max(30, Math.round(w / 20));
+  const points = [];
   for (let i = 0; i <= segments; i++) {
     const x = (i / segments) * w;
-    const peakPhase = Math.sin(i * 0.9 + 1.5) * 0.8 + Math.sin(i * 1.7) * 0.2;
-    const y = baseY - Math.max(0, peakPhase) * maxHeight + Math.sin(time * speed + i) * 2;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+    const n = i / segments * 20;
+    const peakPhase = Math.sin(n * 0.9 + 1.5) * 0.8 + Math.sin(n * 1.7) * 0.2;
+    const y = baseY - Math.max(0, peakPhase) * maxHeight + Math.sin(time * speed + n) * 2;
+    points.push({ x, y });
   }
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i - 1];
+    const cur = points[i];
+    const cpx = (prev.x + cur.x) / 2;
+    const cpy = (prev.y + cur.y) / 2;
+    ctx.quadraticCurveTo(prev.x, prev.y, cpx, cpy);
+  }
+  const last = points[points.length - 1];
+  ctx.lineTo(last.x, last.y);
   ctx.lineTo(w, baseY + 20);
   ctx.lineTo(0, baseY + 20);
   ctx.closePath();
