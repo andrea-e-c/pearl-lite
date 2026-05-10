@@ -244,7 +244,7 @@ const PROMPT_STAGES = [
   {
     id: "what_want",
     text: "What do you want?",
-    subtext: "Don\u2019t think too hard. Just let it come.",
+    subtext: "First thing that comes to mind.",
     branches: (input) => {
       const l = input.toLowerCase();
       if (/peace|calm|quiet|rest|still|serene|relax/.test(l)) return "want_peace";
@@ -258,19 +258,19 @@ const PROMPT_STAGES = [
       return "want_general";
     },
   },
-  { id: "want_peace", text: "Peace. That\u2019s a deep thing to want. What is it that\u2019s been loud?", subtext: "What\u2019s been taking up the space where quiet should be?", next: "why_matters" },
-  { id: "want_connection", text: "Connection. You want to be seen \u2014 really seen. What\u2019s missing right now?", subtext: "Where do you feel the gap?", next: "why_matters" },
-  { id: "want_freedom", text: "Freedom. Something is holding you. What does the cage look like?", subtext: "What would you walk away from if you could?", next: "why_matters" },
-  { id: "want_purpose", text: "Purpose. You want your days to mean something. What would that feel like?", subtext: "Not what it looks like \u2014 what it feels like.", next: "why_matters" },
-  { id: "want_success", text: "You want to build something. To get somewhere. Where are you trying to go?", subtext: "And who are you when you arrive?", next: "why_matters" },
-  { id: "want_joy", text: "Joy. Simple and honest. When was the last time you really felt it?", subtext: "Let yourself remember.", next: "why_matters" },
-  { id: "want_healing", text: "Healing. Something needs to mend. What part of you is asking for care?", subtext: "You don\u2019t have to name it perfectly.", next: "why_matters" },
-  { id: "want_clarity", text: "Clarity. The fog is thick, isn\u2019t it? What question won\u2019t leave you alone?", subtext: "The one that keeps circling back.", next: "why_matters" },
-  { id: "want_general", text: "Sit with that for a moment. Why does that matter to you?", subtext: "Not the surface reason \u2014 the real one.", next: "why_matters" },
+  { id: "want_peace", text: "Peace. OK. What\u2019s making all the noise?", subtext: "Name it.", next: "why_matters" },
+  { id: "want_connection", text: "You want to feel close to someone. What\u2019s in the way?", subtext: "Be specific.", next: "why_matters" },
+  { id: "want_freedom", text: "Freedom from what, exactly?", subtext: "What are you stuck in right now?", next: "why_matters" },
+  { id: "want_purpose", text: "You want your work to matter. What would that actually look like?", subtext: "Concretely. Not the feeling \u2014 the thing.", next: "why_matters" },
+  { id: "want_success", text: "Where are you trying to get to?", subtext: "What does it look like when you\u2019re there?", next: "why_matters" },
+  { id: "want_joy", text: "When\u2019s the last time you felt that?", subtext: "What was happening?", next: "why_matters" },
+  { id: "want_healing", text: "What\u2019s hurting?", subtext: "You can be rough about it. Just say it.", next: "why_matters" },
+  { id: "want_clarity", text: "What\u2019s the question you keep coming back to?", subtext: "The one that won\u2019t resolve.", next: "why_matters" },
+  { id: "want_general", text: "Why does that matter to you?", subtext: "The real reason.", next: "why_matters" },
   {
     id: "why_matters",
-    text: "Why does this matter so much?",
-    subtext: "Go deeper. What\u2019s underneath?",
+    text: "What\u2019s at stake here?",
+    subtext: "Why this, why now?",
     branches: (input) => {
       const l = input.toLowerCase();
       if (/afraid|fear|scared|worry|anxious|lose/.test(l)) return "fear_response";
@@ -281,14 +281,14 @@ const PROMPT_STAGES = [
       return "depth_response";
     },
   },
-  { id: "fear_response", text: "There\u2019s something you\u2019re afraid of losing \u2014 or never having. What does the fear protect?", subtext: "Fear usually guards what we love most.", next: "truth" },
-  { id: "love_response", text: "This is about love, isn\u2019t it? For someone, for something, for who you could be.", subtext: "What does that love need from you today?", next: "truth" },
-  { id: "worth_response", text: "You\u2019re questioning whether you\u2019re enough. But let me ask \u2014 who told you that you weren\u2019t?", subtext: "Whose voice is that, really?", next: "truth" },
-  { id: "time_response", text: "Time feels heavy right now. Like the window is closing. But is it, truly?", subtext: "Or does it just feel that way?", next: "truth" },
-  { id: "pattern_response", text: "This has been with you for a long time. You\u2019ve carried it far. What would it feel like to set it down?", subtext: "Even just for today.", next: "truth" },
-  { id: "depth_response", text: "You\u2019re going deeper. Good. What\u2019s the truest thing you can say about this?", subtext: "The thing you might not say out loud.", next: "truth" },
-  { id: "truth", text: "Now \u2014 say it simply. What do you really, truly want?", subtext: "One sentence. Your truth.", next: "align" },
-  { id: "align", text: "You know what you want. What\u2019s one thing you can do today to move toward it?", subtext: "Not everything. Just one thing. The smallest honest step.", next: "closing" },
+  { id: "fear_response", text: "What are you actually afraid will happen?", subtext: "Say the worst version.", next: "truth" },
+  { id: "love_response", text: "So it\u2019s about someone. What do you need from them that you\u2019re not getting?", subtext: "Or what do you need to give?", next: "truth" },
+  { id: "worth_response", text: "Where did you learn you weren\u2019t enough?", subtext: "That didn\u2019t come from nowhere.", next: "truth" },
+  { id: "time_response", text: "Is the deadline real, or does it just feel that way?", subtext: "Be honest.", next: "truth" },
+  { id: "pattern_response", text: "You\u2019ve been here before. What keeps bringing you back?", subtext: "What haven\u2019t you tried yet?", next: "truth" },
+  { id: "depth_response", text: "Say the thing you\u2019d normally keep to yourself.", subtext: "No one\u2019s watching.", next: "truth" },
+  { id: "truth", text: "Strip it down. What do you actually want?", subtext: "One sentence.", next: "align" },
+  { id: "align", text: "What\u2019s one real thing you can do about it today?", subtext: "Small is fine. Just make it concrete.", next: "closing" },
   { id: "closing", text: null, final: true },
 ];
 
@@ -454,7 +454,7 @@ export default function PearlLite() {
               textAlign: "center", padding: "0 2rem",
             }}
           >
-            You're somewhere warm.
+            Take a second.
           </h1>
           <p
             style={{
@@ -462,7 +462,7 @@ export default function PearlLite() {
               color: COLORS.textDim, marginTop: "1rem", fontStyle: "italic", textAlign: "center",
             }}
           >
-            Sit for a moment. Breathe.
+            No one needs anything from you right now.
           </p>
         </div>
       )}
@@ -505,7 +505,7 @@ export default function PearlLite() {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Speak your truth..."
+                  placeholder="Say it here..."
                   rows={3}
                   style={{
                     width: "100%", maxWidth: "500px", padding: "1rem 1.2rem",
@@ -558,7 +558,7 @@ export default function PearlLite() {
                 letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "2rem",
               }}
             >
-              You woke up.
+              Here\u2019s what you said.
             </p>
 
             {truthEntry && (
@@ -582,7 +582,7 @@ export default function PearlLite() {
             {alignEntry && (
               <div style={{ marginBottom: "2.5rem" }}>
                 <p style={{ fontFamily: "Georgia, serif", fontSize: "0.8rem", color: COLORS.textDim, marginBottom: "0.5rem", fontStyle: "italic" }}>
-                  Your step today
+                  What you said you\u2019d do
                 </p>
                 <p
                   style={{
@@ -605,7 +605,7 @@ export default function PearlLite() {
                   cursor: "pointer", textAlign: "center", listStyle: "none", letterSpacing: "0.1em",
                 }}
               >
-                &#10022; view your full journey &#10022;
+                &#10022; see everything you wrote &#10022;
               </summary>
               <div style={{ marginTop: "1.5rem" }}>
                 {conversationLog.map((entry, i) => (
@@ -632,7 +632,7 @@ export default function PearlLite() {
               onMouseEnter={(e) => { e.target.style.background = "rgba(253,203,110,0.08)"; e.target.style.borderColor = "rgba(253,203,110,0.5)"; }}
               onMouseLeave={(e) => { e.target.style.background = "transparent"; e.target.style.borderColor = "rgba(253,203,110,0.3)"; }}
             >
-              dream again
+              start over
             </button>
 
             <p
